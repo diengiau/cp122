@@ -1,0 +1,18 @@
+---
+title: "Cleaning data"
+author: "Dien Giau (Richard) Bui"
+date: "2/7/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Load library
+```{r}
+library(tidyverse) # for MacOS: library(dplyr)
+library(stringr)
+library()
+```
+
