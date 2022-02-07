@@ -127,6 +127,27 @@ Tuition = Tuition %>%
 ```
 
 
+## Note on `pipe` or `%>%`
+
+- Traditionally, we will write function like:
+```{r eval=FALSE}
+mutate(Tuition, ...)
+```
+
+
+- But in the previous example, I wrote:
+
+```{r eval=FALSE}
+Tuition %>% mutate(...)
+```
+
+- In plain English:
+    1. We take `Tuition` data
+    2. Then `mutate` to add/update new columns to the data
+    3. and so on, we can continue forever with pipe
+
+- It makes our code easier to read and follow, so I will use it a lot in this class
+
 ## 4. Remove duplicates
 
 - Check duplicate by `duplicated`
@@ -208,4 +229,10 @@ summary(Tuition)
 - Need to document all process in an Rmd file like this
     - or you can copy each step's code + results to MS `docx` file, but will need more efforts
 - By the end, you can run everything together to get a report: pdf, word, html format
+- Final tip: save this cleaned data to a `data/process` folder
+
+## Save data
+```{r}
+saveRDS(Tuition, "data/process/Tuition_clean.rds")
+```
 
