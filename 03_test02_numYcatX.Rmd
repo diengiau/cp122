@@ -1,0 +1,136 @@
+---
+title: 'Test 02: Numeric Y vs categorical X'
+author: "Richard"
+date: "1/30/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load required packages
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse) # if you're using macOS, you can run: library(dplyr)
+library(skimr)
+```
+
+## Prepare Data
+
+Please read the intro about data at [here](https://www.openintro.org/data/index.php?data=hsb2)
+
+```{r}
+Hsb <- within(
+  read.csv("https://stats.idre.ucla.edu/stat/data/hsb2.csv"), {
+    race <- as.factor(race)
+    schtyp <- as.factor(schtyp)
+    prog <- as.factor(prog)
+})
+```
+
+## Recall
+
+- Numeric variable
+- Categorical variable
+- What is the key difference between them?
+
+## Some questions between numeric Y and categorical X
+
+- We care about numeric Y for different groups in categorical X
+- For example: Y is salary/score, X is gender
+    - Do male employees earn more than the female co-workers
+    - Do female students have higher write score than the male friends
+
+## R function
+
+- Function: `t.test`
+- Usage: `t.test(y ~ x)
+- `y` is a numeric variable
+- `x` is a categorical variable with two groups
+    - e.g., `female` includes only two values 0 and 1
+
+## R code example
+
+```{r}
+t.test(Hsb$write ~ Hsb$female)
+```
+
+## Assumption of `t.test`
+
+- It requires `y` to be normal distributed!
+    - it is a very strong assumption
+- If `y` is not normal distributed, we aren't confident to use t-test to answer the above research question
+- So, let's check the normality assumption of `y`
+    - or, we ask if `write` is normal distributed first, before we use the t-test
+    
+## Check normality of `write` by histogram
+
+```{r}
+hist(Hsb$write)
+```
+
+## A normality test
+
+```{r}
+shapiro.test(Hsb$write)
+```
+
+## Discuss
+
+- It seems that `write` does not follow normal distribution
+- So we can't use t-test in this case
+- Do we have an alternative test, when we don't have the normality assumption
+    - Yeah! We can use The Wilcoxon-Mann-Whitney test
+
+## R function
+
+- Function: `wilcox.test`
+- Usage: `wilcox.test(y ~ x)`
+- `y` is a numeric variable
+- `x` is a categorical variable with two groups
+    - e.g., `female` includes only two values 0 and 1
+
+## R code example
+
+```{r}
+wilcox.test(Hsb$write ~ Hsb$female)
+```
+
+## Extention: more than 2 groups
+
+- `t.test` works for 2-group X only
+- If we want to check mean difference for more than 2 groups, we need to use one-way ANOVA 
+- For example: if the `write` score is the same for every program
+
+```{r}
+Hsb %>% count(prog)
+```
+
+## R code example
+```{r}
+summary(aov(Hsb$write ~ Hsb$prog))
+```
+
+## Discussion
+
+- A very small p-value indicates that the write score is not the same across programs
+
+## Short quiz
+
+- Rewrite ANOVA code above using `%>%` instead of `summary(aov(...))`
+
+## In sum
+
+- In this lecture, we learn:
+    - Two-sample `t.test`
+    - Wilcoxon-Mann-Whitney test `wilcox.test`
+    - ANOVA `aov`
+
+- Next lecture goes to a more common case when both Y and X are numeric variables
+
+
+
+
+
+

@@ -1,0 +1,158 @@
+---
+title: "Test 04B - Regression diagnostics and tidy regression results"
+author: "Richard"
+date: "2/2/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load required packages
+
+```{r warning=FALSE}
+library(tidyverse) 
+# if you're using macOS, you can run: library(dplyr)
+library(skimr)
+library(broom)
+library(modelr)
+```
+
+## Prepare Data
+
+```{r}
+Hsb <- within(
+  read.csv("https://stats.idre.ucla.edu/stat/data/hsb2.csv"), {
+    race <- as.factor(race)
+    schtyp <- as.factor(schtyp)
+    prog <- as.factor(prog)
+})
+```
+
+## A regression
+
+Recall that we run a regerssion between `write` score on `read` score and `female` (equal 1 for female students):
+
+```{r}
+ols_reg_fit = lm(formula = write ~ read + female, data = Hsb)
+summary(ols_reg_fit)
+```
+
+## Tidy the coefficients
+
+- The about regressions results are in text format, which is time-consuming to copy to a report
+- How about we transform it into a dataframe to easy to manipulate later
+- For example, if we want to get the coefficient of `read`, we can easy `filter` and `select` to get the coefficient, rather than copy-and-paste:
+
+```{r}
+tidy(ols_reg_fit)
+```
+
+## Get predictions and residuals
+
+- Recall that in a regression
+
+$$Y = a + bX + e$$
+
+- So the prediction is:
+
+$$\hat{Y} = \hat{a} + \hat{b}X$$
+
+- and residuals:
+
+$$\hat{e} = Y - \hat{Y}$$
+
+- We have several ways to get the predictions and residuals
+
+## 1st way: manual calculation
+
+The fitted Y is the product of estimated coefficients and the corresponding X.
+```{r}
+write_hat = 20.2283684 + 0.5658869*Hsb$read + 5.4868940*Hsb$female
+head(write_hat)
+```
+
+The residuals is the difference between Y and fitted Y:
+```{r}
+head(Hsb$write - write_hat)
+```
+
+## 2nd way: use `tidy::augment`
+
+This function added several new columns, including the fitted and residuals to the original data. Compare the results to the manual calculation above.
+```{r}
+Hsb = augment(ols_reg_fit, Hsb) 
+Hsb %>% 
+  select(.fitted:.std.resid) %>% 
+  head()
+```
+
+## Regression diagnostics
+
+- The OLS regressions have several important assumptions, which we assume the data must be, to make sure the estimation is correct.
+
+- Thus, after running regression, we often need to check these assumptions again to make sure
+
+- This process is called as "regression diagnostics"
+
+- I borrow a lot from [this slide note from UCLA](https://stats.idre.ucla.edu/wp-content/uploads/2019/02/R_reg_part2.html)
+
+## Assumption 1: Homogeneity of variance (homoscedasticity)
+
+- It assumes that the variance of residuals is constant
+
+- If the model is well-fitted, there should be no pattern to the residuals plotted against the fitted values.
+
+- Let's plot to see:
+
+## Plot of residuals
+
+```{r}
+plot(Hsb$.resid ~ Hsb$.fitted)
+abline(h = 0, lty = 2)
+```
+
+
+## Assumption 2: Normality of residuals
+
+- It assumes that the residuals follow a normal distribution
+
+- Thus, we need to test normality for the residuals
+
+## Q-Q plot
+
+```{r}
+qqnorm(Hsb$.resid)
+qqline(Hsb$.resid)
+```
+
+## Normality test for residuals
+
+Do you remember we have a test for normality?
+
+## Assumption 3: Check for multicolinearity
+
+- The term collinearity implies that two variables are near perfect linear combinations of one another. 
+
+- VIF, variance inflation factor, is used to measure the degree of multicollinearity.
+
+- Rule-of-thump: VIF >= 10 means that the variable could be considered as a linear combination of other independent variables.
+
+## Multicolinearity check in R
+
+- Install `car` package if not yet
+```{r}
+# install.packages("car")
+car::vif(ols_reg_fit)
+
+```
+
+- All coefficients have low VIF
+    - Less concern on multicolinearity problem
+
+## Quiz time
+
+Hmm...
+
+

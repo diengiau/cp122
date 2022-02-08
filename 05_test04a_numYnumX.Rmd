@@ -1,0 +1,196 @@
+---
+title: 'Test 04: Numeric Y vs Numeric X'
+author: "Richard"
+date: "1/30/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load required packages
+
+```{r warning=FALSE}
+library(tidyverse) # if you're using macOS, you can run: library(dplyr)
+library(skimr)
+library(ggplot2)
+```
+
+## Prepare Data
+
+Please read the intro about data at [here](https://www.openintro.org/data/index.php?data=hsb2)
+
+```{r}
+Hsb <- within(
+  read.csv("https://stats.idre.ucla.edu/stat/data/hsb2.csv"), {
+    race <- as.factor(race)
+    schtyp <- as.factor(schtyp)
+    prog <- as.factor(prog)
+})
+```
+
+## Numeric variables
+
+- In general, we deal with numeric variables all the time
+    - e.g., temperature, rain volume, salary, ...
+- It is rich value and contains more information than categorical variables
+- Sometimes, we want to find the **relation** between two numeric variables
+    e.g., "temperature and our electricity bills", "how far you live to the downtown and your income", ...
+- A **relation** does not mean a **causality**
+
+## Relation/Correlation vs Causality
+
+- Relation/correlation shows that if X increases, Y will increase or decrease, depending on the relation is positive or negative correlated
+- Causality means that because of X, so we have Y
+    - we know which variable happens first, then we have the outcome
+- For example, return to our proposed relation: *"how far you live to the downtown and your income"*
+    - it is difficult to know which variable causes which variable
+    - e.g., maybe you're rich so you live in downtown; or because you're living in downtown so you find a better job; or because you was born in a high-class family so you are not only live in downtown but also have a good-paid job
+- In this class, we focus on correlation, not causality, which requires a more sophisticated class in the future (Econometrics class)
+
+## Research question
+
+- If `write` and `read` scores are correlated?
+
+## Scatter plot
+
+```{r}
+attach(Hsb)
+plot(x = read, y = write)
+```
+
+## More beautiful plot: using `ggplot`
+
+```{r}
+ggplot(Hsb, aes(x=read, y=write)) + geom_point()
+```
+
+## Add labels
+
+```{r}
+ggplot(Hsb, aes(x=read, y=write)) + geom_point() +
+  xlab("Reading score") + ylab("Writing score") +
+  labs(title = "Relation between reading and writing scores")
+```
+
+## Change the theme of the plot
+
+```{r}
+ggplot(Hsb, aes(x=read, y=write)) + geom_point() +
+  xlab("Reading score") + ylab("Writing score") +
+  labs(title = "Relation between reading and writing scores") +
+  theme_minimal()
+```
+
+## To save the plot to file
+
+```{r eval=FALSE}
+ggsave("path_to_file.png") # I WILL NOT RUN, WILL DEMO IN CLASS LATER
+```
+
+
+## Correlation
+
+```{r}
+cor(read, write)
+```
+
+Test significance of the correlation:
+```{r}
+cor.test(read, write)
+```
+
+## Regression
+
+- In addition to correlation, we can run a regression between `X` and `Y`
+- What is regression?
+    - We use OLS to draw a line that show the relation between X and Y
+    - There are so many possible lines that can draw thru the scatter plot
+    - OLS method chooses the line that minimize the squared errors (a bit technical here, let me explain more!)
+
+## Fit regression
+
+```{r}
+ols_reg_fit = lm(formula = write ~ read, data = Hsb)
+summary(ols_reg_fit)
+```
+
+## Discussion
+
+- The coefficient of `read` is close to the correlation coefficient, but not exactly the same
+- It has 3 stars!
+    - More stars indicate more significant --> good news, we discover something!
+- How to understand this `0.55` coefficient?
+    - When `read` score increase 1 point, what will happen to `write` score?
+- What is `Intercept` coefficient?
+    - What if `read` score  = 0?
+
+
+## Extension 1: More independent variables
+
+- More variables in the right-hand side:
+    - Why we put more variables to the regression?
+    - E.g., Does gender affect the write score? Why we don't put it to consideration?
+
+
+## R code example
+
+```{r}
+ols_reg_fit = lm(formula = write ~ read + female, data = Hsb)
+summary(ols_reg_fit)
+```
+
+## Discuss
+
+- `read` coefficient changed!
+    - larger or smaller?
+    - why? because we controlled for gender!
+- Similarly, we can control as nearly all variables we think/find it important
+- Which variables we need to control?
+    - Ask an expert
+    - Read the literature
+
+## Extension 2: transformed variables in regression
+
+- Sometimes, we want to transform variables before putting them to the regression
+- For example, we may want to take log of scores before regressions
+
+```{r}
+# transform
+write_log = log(Hsb$write)
+read_log = log(Hsb$read)
+
+# fit
+ols_reg_fit = lm(formula = write_log ~ read_log)
+summary(ols_reg_fit)
+```
+
+## A quicker method: using `I()`
+
+```{r}
+ols_reg_fit = lm(formula = I(log(write)) ~ I(log(read)))
+summary(ols_reg_fit)
+```
+
+## Another quiz
+
+- Can you run a regression between `write` and `read` and the squares of `read`?
+
+## Extension 3: Interaction between X variables
+
+- For example: we want to regress `write` on `read`, `female`, and the interaction between these two
+- We can do manually, or using the below code:
+
+```{r}
+ols_reg_fit = lm(formula = write ~ read*female)
+summary(ols_reg_fit)
+```
+
+## Last words for this lecture
+
+- Oops, you may be too tired at this step
+- But not yet finished, we need to learn more about assumption diagnostics
+- We also learn how to `tidy` the regression results in the next lecture
+
+

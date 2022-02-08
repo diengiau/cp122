@@ -1,0 +1,89 @@
+---
+title: 'Test 03: Categorical Y vs categorical X'
+author: "Richard"
+date: "1/30/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load required packages
+
+```{r warning=FALSE}
+library(tidyverse) 
+# if you're using macOS, you can run: library(dplyr)
+library(skimr)
+```
+
+
+
+## Prepare Data
+
+```{r}
+Hsb <- within(
+  read.csv("https://stats.idre.ucla.edu/stat/data/hsb2.csv"), {
+    race <- as.factor(race)
+    schtyp <- as.factor(schtyp)
+    prog <- as.factor(prog)
+})
+```
+
+## Categorical Y and categorical X
+
+ For example, we use the hsb2 data file, let’s see if there is a relationship between the type of school attended (schtyp) and students’ gender (female).
+
+## Frequency table
+
+- The below code show the frequency table between gender and school type:
+
+```{r}
+Hsb %>% count(female, schtyp)
+```
+
+- Can you explain this data?
+
+## A matrix format
+
+- Each row is gender
+- Each column is each school type
+
+```{r}
+table(Hsb$female, Hsb$schtyp)
+```
+
+
+## Chi-square test
+
+```{r}
+chisq.test(table(Hsb$female, Hsb$schtyp))
+```
+
+## Discussion
+
+- These results indicate that there is no statistically significant relationship between the type of school attended and gender (chi-square with one degree of freedom = 0.0005, p = 0.98).
+
+
+## Another example
+
+Please check the relationship between gender (`female`) and socio-economic status (`ses`) using chi-square test.
+
+## Assumption of chi-square test
+
+- Remember that the chi-square test assumes the expected value of each cell is five or higher.
+- However, if this assumption is not met in your data, please see the section on Fisher’s exact test below.
+
+## Fisher's exact test
+
+```{r}
+fisher.test(table(Hsb$female, Hsb$schtyp))
+```
+
+## Practice
+
+Please check the relationship between race (`race`) and school type (`schtyp`)
+
+## Quiz time
+
+Hmm...
