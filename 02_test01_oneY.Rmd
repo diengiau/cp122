@@ -1,0 +1,159 @@
+---
+title: "Test 01: One variable of interest Y"
+author: "Richard"
+date: "1/29/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load required packages
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse) 
+# if you're using macOS: library(dplyr)
+library(skimr)
+```
+
+## One variable of interest
+
+- Sometimes, we often analyze/care about only one variable: salary, gender, interest, returns, score, pass/fail an exam, ...
+- We can classify these measures into two groups:
+    - Numeric variables: which ones above are numeric?
+    - Categorical variables: which ones?
+- Thanks to their data structure, we need different statistical tests applied to them when we ask questions about them
+- Let check one example with a categorical variable: gender
+
+
+## Prepare Data
+
+Please read the intro about data at [here](https://www.openintro.org/data/index.php?data=hsb2)
+
+```{r}
+Hsb <- within(
+  read.csv("https://stats.idre.ucla.edu/stat/data/hsb2.csv"), {
+    race <- as.factor(race)
+    schtyp <- as.factor(schtyp)
+    prog <- as.factor(prog)
+})
+```
+
+## Check data
+
+```{r}
+head(Hsb[,1:8])
+```
+
+## Summary data
+
+```{r}
+summary(Hsb)
+# skim_without_charts(Hsb)
+```
+
+## Questions
+
+- How the authors construct `female` variable in the `Hsb` dataset.
+- How much is the female ratio (female/total students)?
+    - We often compare this ratio to which number/ratio?
+
+## Binomial test
+
+- Hypothesis: Does the female ratio is equal to 0.5 or 50%?
+- Null hypothesis H0: The female ratio is 50%.
+- Alternative hypothesis H1: The female ratio is different from 50%.
+
+## R function
+
+- Function: `prop.test`
+- Usage: `prop.test(x, n, p)`
+    - Recall: how to read help documentation in R?
+    - `?prop.test`
+
+## R code example
+
+```{r}
+prop.test(sum(Hsb$female), length(Hsb$female), p = 0.5)
+```
+
+## Discussion
+
+- In the sample, the female ratio is 54.5%
+- The binomial test shows that the p-value is 0.2293, which is larger than the significance level (e.g., 10%)
+- So we can't reject the null hypothesis
+    - we don't have enough evidence to conclude that the female ratio is different than 50%
+
+## Similar questions in our life
+
+- We often have same questions in our daily life
+    - Does wearing mask prevent us from covid virus?
+    - Does wearing helmet will help motorcylists have less serious traffic accidents?
+
+## Short quizes in classes
+
+I will give you a sample data, let apply the `prop.test` with that data in class.
+
+## Numeric variable
+
+- Next, switching to a numeric variable, which can receive any continuous value:
+    - e.g., salary, returns, interest rate, ...
+    
+- We often want to know the mean (centralized tendency) and the variance/standard deviation of this variable:
+    - e.g.1., what is the average salary after we graduated and got the first job
+    - e.g.2., what is the average `write` score of all students in the class
+
+## Questions
+
+- Check again, what is average `write` score in our `Hbs` data
+- Is it equal to 50, or different
+
+## Binomial test
+
+- Hypothesis: Does the write score is equal to 50?
+- Null hypothesis H0: The write score is 50.
+- Alternative hypothesis H1: The write score is different from 50.
+
+## R function
+
+- Function: `t.test`
+- Usage:
+
+## R code example
+
+```{r}
+t.test(Hsb$write, mu = 50)
+```
+
+## Discussion
+
+- How to read the results?
+
+## Short quizes again
+
+- Let apply `t.test` more
+
+## Another important stat to measure central tendency: median
+
+- Let do the same test, but ask if the median is equal to 50 or not
+
+```{r}
+wilcox.test(Hsb$write, mu = 50)
+```
+
+
+
+## Next lecture
+
+- This lecture introduces to you three important tests:
+    - `prop.test`
+    - one-sample `t.test`
+    - one-sample median test `wilcox.test`
+- We will consider two variables at the same time:
+    - One is our variable of interest such as `write` score
+    - Another one is another factor: such as `female` and `male` students
+    - So the question is more like: are the write scores the same between female and male students? Or female students write better (thanks to their gifted writing skills) so they score higher?
+    
+- Let's see in the next lecture
+
