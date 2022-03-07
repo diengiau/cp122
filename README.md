@@ -6,7 +6,7 @@ CP122: Fundamental Computer Programmingâ€“Statistical and Quantitative Analysisâ
 - This update: for Spring class 2022.
 
 # Content
-1. Clean data: [slide](slide/01_clean.pdf), [code](01_clean.Rmd), [video](https://youtu.be/ov4UTr6S2qA) (all videos in this class are presented by my TA, Kingsley)
+1. Clean data: [slide](slide/01_clean.pdf), [code](01_clean.Rmd), [video](https://youtu.be/ov4UTr6S2qA) (this video is presented by my TA, Kingsley)
     - Practice for clean data: Starbucks drink nutrition [data](data/raw/starbucks-nutrition.xlsx), [description](slide/starbucks-nutrition-description.docx)
 1. One Y variable: [slide](slide/02_test01_oneY.pdf), [code](02_test01_oneY.Rmd)
 1. Numeric Y & Categorical X: [slide](slide/03_test02_numYcatX.pdf), [code](03_test02_numYcatX.Rmd)
