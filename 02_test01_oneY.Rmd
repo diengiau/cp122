@@ -109,7 +109,7 @@ I will give you a sample data, let apply the `prop.test` with that data in class
 - Check again, what is average `write` score in our `Hbs` data
 - Is it equal to 50, or different
 
-## Binomial test
+## t test
 
 - Hypothesis: Does the write score is equal to 50?
 - Null hypothesis H0: The write score is 50.
