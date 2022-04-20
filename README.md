@@ -13,13 +13,14 @@ CP122: Fundamental Computer Programmingâ€“Statistical and Quantitative Analysisâ
 1. Categorical Y & Categorical X: [slide](slide/04_test03_catYcatX.pdf), [code](04_test03_catYcatX.Rmd)
 1. Numeric Y & Numeric X: [slide](slide/05_test04a_numYnumX.pdf), [code](05_test04a_numYnumX.Rmd)
 1. Regression diagnostics and tidy: [slide](slide/06_test04b_reg_diagnostics_tidy.pdf), [code](06_test04b_reg_diagnostics_tidy.Rmd)
-1. Extension 1: Don't repeat yourself: [slide](), [code]()
+1. Extension 1: Don't repeat yourself: [slide](slide/07_iteration_function.pdf), [code](07_iteration_function.Rmd)
 1. Extension 2: PCA: [slide](slide/08_pca.pdf), [code](08_pca.Rmd)
 
 # Change logs
 
 - 2022/2/7: start the repo
 - 2022/2/28: add first video
+- 2022/4/20: add more videos
 - 2022/4/20: add slide 8 of PCA and kickoff iteration+function
 
 

@@ -1,0 +1,218 @@
+---
+title: "07 Don't repeat yourself"
+author: "Dien Giau (Richard) Bui"
+date: "4/20/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen = 1, digits = 2) #set to two decimal 
+```
+
+## Load library
+
+```{r warning=FALSE}
+library(dplyr)
+library(skimr)
+library(stringr)
+library(broom)
+```
+
+```{r include=FALSE}
+analyze_subsize = function(size_type){
+  ## YOU CONTINUE HERE
+  Qs_subset = Qs %>% filter(size==size_type)
+  print(mean(Qs_subset$size))
+  m2 = lm(score ~ international_students + faculty_count + student_faculty_ratio, data=Qs_subset)
+  return(tidy(m2))
+}
+```
+
+## Introduction
+
+- Life is full of repeated routine
+    - Repeat calculation or analysis
+- This note provides some techniques to iterate/repeat things in a programming way such as:
+    - Define your own function to repeat things
+    - Loop or mapping
+    
+## Example
+
+- We may ask if how much is the ranking score of universities across different size
+- and for each group size, if the number of international students, faculties, and student-faculty-ratio can affect the `score`
+- Load data:
+
+```{r message=FALSE, warning=FALSE}
+data_path = "data/raw/qs-world-university-rankings-2017-to-2022-V2.csv"
+Qs = readr::read_csv(data_path)
+
+Qs = Qs %>% 
+  mutate(research_output = str_replace(research_output, "Very high", "Very High"))
+Qs = Qs %>% filter(!is.na(research_output))
+Qs = Qs %>% filter(!is.na(type))
+Qs = Qs %>% 
+  mutate(private = ifelse(type=="Private", 1, 0))
+```
+
+## How many size groups?
+
+```{r}
+Qs %>% count(size)
+```
+
+## First, focus on L size
+
+```{r}
+Qs_L = Qs %>% filter(size == "L")
+mean(Qs_L$score, na.rm = TRUE)
+m1 = lm(score ~ international_students + faculty_count + 
+          student_faculty_ratio, data=Qs_L)
+tidy(m1)
+```
+
+## Then, we continue with M size
+
+```{r}
+Qs_M = Qs %>% filter(size == "M")
+mean(Qs_M$score, na.rm = TRUE)
+m2 = lm(score ~ international_students + faculty_count + 
+          student_faculty_ratio, data=Qs_M)
+tidy(m2)
+```
+
+## Discussion
+
+- The process to analyze for L and M groups is very similar
+    - Filter: one filter "L" and one filter "M"
+    - Take mean of `score`: same
+    - Run a regression: same formula
+    - Clean/tidy the model coefficients: same
+
+- So, actually, they are only different at one input in filter data in the first step
+
+## Define own function
+
+- So, we can think about create your own function so that we can repeat this process easily
+- A function needs to have:
+    - Input: input of the function, in our case, should be the value to filter size, it could receive "L", "M", "S", "XL"
+    - Process with this input
+    - Return output by the end
+- Look like this:
+```{r eval=FALSE}
+function_name = function(Input){
+  # PROCESS DATA HERE to get Output
+  
+  # RETURN OUTPUT HERE
+  return(Output)
+}
+```
+
+
+## For example
+
+- Write a function to take square of a number
+
+```{r}
+# step 1: define your function
+calculate_square = function(x){
+  x_square = x*x
+  return(x_square)
+}
+# step 2: use/apply the function
+calculate_square(4)
+```
+
+
+## Try to write your function here
+
+- AN EMPTY SLIDE HERE WITH INTENTION
+```{r eval = FALSE}
+analyze_subsize = function(size_type){
+  ## YOU CONTINUE HERE
+}
+```
+
+
+## Apply the function for each group
+
+```{r message=FALSE, warning=FALSE}
+analyze_subsize(size_type = "L")
+#analyze_subsize(size_type = "M")
+#analyze_subsize(size_type = "S")
+#analyze_subsize(size_type = "XL")
+```
+
+## Discussion
+
+- After having a magic function, we only need to use/apply the function 4 times
+    - And if we need later, we also just simply apply more, no need to re-write the whole long process
+- If we add more analysis (t-test or so), we simply fix the source code of function
+    - So very easy to maintain the analysis process
+
+## But ... 
+
+- Do you notice that we aim to avoid repeating things in programming
+- So even we now only have a magic function, we still need to repeat 4 times (and even more, e.g., 1,000 groups)
+
+```{r}
+#analyze_subsize(size_type = "L")
+#analyze_subsize(size_type = "M")
+#analyze_subsize(size_type = "S")
+#analyze_subsize(size_type = "XL")
+```
+
+## How to avoid this repeatation?
+
+- In R, we can use some loop/mapping to avoid this kind of repeat
+- Let me show you with loop then with mapping later
+
+## Use loop to avoid repeat a function many times
+
+```{r message=FALSE, warning=FALSE}
+all_size_type = c("M", "L", "S", "XL")
+output = vector(mode = "list", length = 4)
+for (i in 1:4){
+  output[[i]] = analyze_subsize(size_type = all_size_type[i])
+}
+```
+
+## See our output vector
+
+```{r}
+# for L size
+output[[2]]
+```
+
+## Another way is mapping or apply
+
+- `lapply` is apply and store output as a list
+```{r, message=FALSE, warning=FALSE}
+output = lapply(X = all_size_type, FUN = analyze_subsize)
+# for L size
+output[[2]]
+```
+
+
+## Thank you
+
+- Thank you for today
+- We will have more practices in class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
