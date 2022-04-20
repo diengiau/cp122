@@ -1,0 +1,150 @@
+---
+title: "08 PCA"
+author: "Dien Giau (Richard) Bui"
+date: "4/20/2022"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load required packages
+
+```{r warning=FALSE}
+library(tidyverse) 
+# if you're using macOS, you can run: library(dplyr)
+library(skimr)
+library(broom)
+library(modelr)
+```
+
+## Introduction
+
+- A data table is a space of information
+    - Each column/variable is a feature/`dimension` that adds more information to our understanding about a problem
+- When data is bigger and bigger, the information set gets bigger and bigger
+- For example, data can have more than 1,000 variables
+    - We need to analyze statistics of each variable and do some tests like t-test to understand the data
+    - But very exhausted
+    
+## Dimension reduction
+
+- That's why in data science, people think out a way to reduce the dimension of data
+- Say, how to combine 1,000 variables into a few variables that can capture most of information in the data
+- It is similar to news summary by the end of the day:
+    - Instead of reading all 1,000 news articles, we just need to read 2-3 news summary by the end and understand most of things happen in today
+- Today's lecture will introduce to you that skill: Principal component analysis or PCA
+
+## An overview of PCA
+
+- Combine features into a smaller set of principal component:
+    - Each component has `score`: which is linear combination of features
+- Each component aims to explain the highest variance/variation in the data
+    - The first component explains most of variance
+    - The second component continues to explain a bit
+    - and so on
+    
+## An example
+
+- We have a data of crime in 50 US states with 4 variables:
+    - `Assault`: the number of assault arrests/100,000 residents
+    - `Murder`: the number of murder arrests/100,000 residents
+    - `Rape`: the number of rape arrests/100,000 residents
+    - `UrbanPop`: the percent of population in each state living in urban areas
+
+## Import data
+
+```{r}
+Crime = USArrests
+head(Crime)
+```
+
+## Skim statistics
+```{r}
+skim_without_charts(Crime) %>% 
+  as.data.frame() %>% 
+  select(var=skim_variable, mean=numeric.mean, 
+         sd=numeric.sd)
+```
+
+## Discussion
+
+- `Assault` has the highest variance and mean
+- `UrbanPop` has different units with other variables
+
+## To run PCA in R
+
+- Pretty simple: 
+
+```{r}
+pca_out = prcomp(Crime)
+names(pca_out)
+```
+
+## Output of PCA
+
+- `center` and `scale` show means and standard deviations of the variables that were used for scaling prior to implementing PCA
+- `rotation`: provides the principal component `loadings`, which is how each variables contribute to a principal component
+- `x`: principal component scores, which is linear combination of all variables
+- `sdev`: standard deviation of each principal component
+
+## `rotation`: principal component `loadings`
+
+```{r}
+pca_out$rotation
+```
+
+- `Assault` contributes mostly to `PC1`
+- It just simply ignore the other variables' information
+- It may raise concern that we lose so much money
+    - Units and each variable variance is very important and can affect our PCA analysis
+    - It is better to scale data before running PCA, let's do again
+
+## Scaled PCA
+
+```{r}
+pca_out = prcomp(Crime, scale. = TRUE)
+pca_out$rotation
+```
+
+- Now PC1 contains information from each variable
+
+## How good is a PCA?
+
+- How much variance of dataset can be explained by PC?
+    - If PC can explain much of variance of dataset, it means that we do capture much of information in the data
+    
+- In R, we need to calculate the variance explained by each principal component and draw the `scree plot`
+
+## Variance explained by each component
+
+```{r}
+pca_var = pca_out$sdev^2
+pve = pca_var/sum(pca_var)
+pve
+```
+
+- So PC1 explains 62% of data variance
+- PC2 explains 24.7% of data variance
+- So only two PC we can explain around 87% of data variance
+
+
+## Scree plot
+```{r}
+par(mfrow = c(1, 2))
+plot(pve, xlab = "Principal Component", ylab = "Proportion of Variance Explained", ylim = c(0, 1), type = "b")
+plot(cumsum(pve), xlab = "Principal Component", ylab = "Cumulative Proportion of Variance Explained", ylim = c(0, 1), type = "b")
+```
+
+## Practice time
+
+- In class, we will practice more
+
+
+
+
+
+
+
+
