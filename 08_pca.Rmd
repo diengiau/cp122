@@ -140,6 +140,7 @@ plot(cumsum(pve), xlab = "Principal Component", ylab = "Cumulative Proportion of
 ## Practice time
 
 - In class, we will practice more
+- We will do PCA for our university ranking data to see if we can combine variables to explain the ranking of a university
 
 
 
