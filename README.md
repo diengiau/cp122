@@ -3,7 +3,7 @@
 CP122: Fundamental Computer Programming–Statistical and Quantitative Analysis​
 
 - Official source code for my class CP122 at YZU.
-- This update: for Spring class 2022.
+- This update: for Spring class 2023.
 
 # Content
 1. Clean data: [slide](slide/01_clean.pdf), [code](01_clean.Rmd), [video](https://youtu.be/ov4UTr6S2qA) (this video is presented by my TA, Kingsley)
@@ -22,8 +22,8 @@ CP122: Fundamental Computer Programming–Statistical and Quantitative Analysis�
 - 2022/2/28: add first video
 - 2022/4/20: add more videos
 - 2022/4/20: add slide 8 of PCA and kickoff iteration+function
-
+- 2023/4/15: add Shiny web app
 
 # Contact
 
-[Richard](http://www.cm.yzu.edu.tw/EN/Page/Teacher.aspx?ID=buidiengiau)
+[Richard](https://diengiau.github.io/)
