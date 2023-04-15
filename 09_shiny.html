@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Richard Bui">
+<meta name="dcterms.date" content="2023-01-01">
+
+<title>09_shiny</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="09_shiny_files/libs/clipboard/clipboard.min.js"></script>
+<script src="09_shiny_files/libs/quarto-html/quarto.js"></script>
+<script src="09_shiny_files/libs/quarto-html/popper.min.js"></script>
+<script src="09_shiny_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="09_shiny_files/libs/quarto-html/anchor.min.js"></script>
+<link href="09_shiny_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="09_shiny_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="09_shiny_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="09_shiny_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="09_shiny_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">09_shiny</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Richard Bui </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 1, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="what-is-shiny" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-shiny">What is Shiny?</h2>
+<p><code>Shiny</code> is a web-app using R programming. In other words, it allows us to build an interactive app that may useful for data analysis. For example:</p>
+<ul>
+<li>Pick a variable from a dataset then draw its histogram or calculate its statistics</li>
+<li>Pick two variables and run a regression between two variables, then show us all the coefficients</li>
+</ul>
+</section>
+<section id="why-do-we-need-a-shiny-app" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-we-need-a-shiny-app">Why do we need a <code>Shiny</code> app?</h2>
+<ul>
+<li>For users!
+<ul>
+<li>They don’t know R, say, your boss or your parents (most of them)</li>
+<li>To sell your products later</li>
+</ul></li>
+</ul>
+</section>
+<section id="components-of-a-shiny-app" class="level2">
+<h2 class="anchored" data-anchor-id="components-of-a-shiny-app">Components of a Shiny app</h2>
+<ul>
+<li>You need to install and use the package <code>shiny</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>v ggplot2 3.3.6     v purrr   0.3.4
+v tibble  3.1.7     v dplyr   1.0.9
+v tidyr   1.2.0     v stringr 1.4.0
+v readr   1.4.0     v forcats 0.5.1</code></pre>
+</div>
+</div>
+<ul>
+<li>An app has two parts:
+<ol type="1">
+<li><code>ui</code> (user interface, front end): you design an interface for users to use your app</li>
+<li><code>serve</code> (backend): to receive the request from user, analyze it, get the output, and return to the user at front end</li>
+</ol></li>
+<li>Then, we combine them together via a function like <code>shinyApp(ui, server)</code></li>
+</ul>
+</section>
+<section id="example-1-statistics-of-one-variable" class="level2">
+<h2 class="anchored" data-anchor-id="example-1-statistics-of-one-variable">Example 1: Statistics of one variable</h2>
+<ul>
+<li>Assume we have a dataset already, e.g., our student score dataset</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Hsb <span class="ot">&lt;-</span> <span class="fu">within</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">"https://stats.idre.ucla.edu/stat/data/hsb2.csv"</span>), {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    race <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(race)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    schtyp <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(schtyp)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    prog <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(prog)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Take a look at data:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Hsb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id female race ses schtyp prog read write math science socst
+1  70      0    4   1      1    1   57    52   41      47    57
+2 121      1    4   2      1    3   68    59   53      63    61
+3  86      0    4   3      1    1   44    33   54      58    31
+4 141      0    4   3      1    3   63    44   47      53    56
+5 172      0    4   2      1    2   47    52   57      53    61
+6 113      0    4   2      1    2   44    52   51      63    61</code></pre>
+</div>
+</div>
+<ul>
+<li>The students may have scores in 4 subjects: reading, writing, math, and science. Our purpose/problem is to allow users to understand the statistics of these 4 scores.
+<ul>
+<li><strong>[Front end]:</strong> The user can pick any subject at the front end</li>
+<li><strong>[Back end]:</strong> After the user chose the variable, we <code>select</code> that variable from the data <code>Hsb</code></li>
+<li><strong>[Back end]:</strong> We analyze that variable, e.g., simple take <code>summary</code> function to get the statistics of the variable</li>
+<li><strong>[Front end]:</strong> Return the output to the user at the front end</li>
+</ul></li>
+</ul>
+</section>
+<section id="part-1-ui" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-ui">Part 1: <code>ui</code></h2>
+<ul>
+<li><p>Let’s design our <code>ui</code>: we need two things</p>
+<ul>
+<li><strong>[Front end, step 1]:</strong> The user can pick any subject at the front end</li>
+<li><strong>[Front end, step 2]:</strong> Return the output to the user at the front end</li>
+</ul></li>
+<li><p>It requires your imagination, creativity, and learn from other apps. Now, <code>ui</code> design is a skill and a potential career for everyone</p></li>
+<li><p>In class, I will not go to details how to make it beautiful. You need to learn yourselves. I just give you very simple design in the class (I have poor creativity!)</p></li>
+<li><p>OK. We have two parts of the <code>ui</code>:</p></li>
+<li><p>So many possible layouts to choose to pick a thing in Shiny</p></li>
+<li><p>Please see this website to learn more: <a href="https://shiny.rstudio.com/articles/layout-guide.html" class="uri">https://shiny.rstudio.com/articles/layout-guide.html</a></p></li>
+<li><p>How about we divide the app’s <strong>layout</strong> into two areas (<strong>sidebar layout</strong>):</p>
+<ul>
+<li>Left side: allow the user to pick the variable</li>
+<li>Right side: show the output after we analyzed data at the front end</li>
+</ul></li>
+</ul>
+</section>
+<section id="sidebar-layout-to-split-the-ui-into-two-areas" class="level2">
+<h2 class="anchored" data-anchor-id="sidebar-layout-to-split-the-ui-into-two-areas">Sidebar <code>layout</code>: to split the ui into two areas</h2>
+<ul>
+<li>It will look like this:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># App title ----</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Shiny First App"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sidebar layout</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LEFT: Sidebar panel for inputs ----</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Input: WRITE YOUR CODE HERE (1)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  RIGHT: Main panel for displaying outputs ----</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Output: WRITE YOUR CODE HERE (2)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Because you haven’t written your code so nothing appears</li>
+</ul>
+</section>
+<section id="input-select-widget" class="level2">
+<h2 class="anchored" data-anchor-id="input-select-widget">Input: select <code>widget</code></h2>
+<ul>
+<li><p>Now, let’s write the code for input</p></li>
+<li><p>To pick a variable: we need to have a control <code>widget</code> to pick the variable</p></li>
+<li><p>Read more on widget at here: <a href="https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/" class="uri">https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/</a> and the gallery of all possible widgets <a href="http://shiny.rstudio.com/gallery/widget-gallery.html" class="uri">http://shiny.rstudio.com/gallery/widget-gallery.html</a></p></li>
+<li><p>Again, there are so many widgets to choose so that we can pick something in Shiny:</p>
+<p><img src="https://shiny.rstudio.com/tutorial/written-tutorial/lesson3/images/basic-widgets.png" class="img-fluid"></p></li>
+<li><p>For our problem, we want to design so that the user can pick one of these 4 possible choices: <code>read</code>, <code>write</code>, <code>math</code>, and <code>science</code></p></li>
+<li><p>Which widget you think will fit your problem?</p>
+<ul>
+<li><p>Buttons: not for picking things</p></li>
+<li><p>Text input: the user doesn’t know the variable names, typo, lazy users</p></li>
+<li><p>Date: for dates picking only</p></li>
+<li><p>Sliders: more suitable for picking numeric ranges</p></li>
+<li><p>Select box may be good</p></li>
+</ul></li>
+<li><p>OK. Let’s use select box widget: <code>selectInput</code> with four possible choices</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sidebarPanel</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Input: WRITE YOUR CODE HERE (1)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="st">"var"</span>, <span class="co"># name of this widget</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">h3</span>(<span class="st">"Select one variable"</span>), <span class="co"># label of this widget</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"read"</span> <span class="ot">=</span> <span class="st">"read"</span>, <span class="co"># "user select this" = value we set for this option, will be used later in the back end</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"write"</span> <span class="ot">=</span> <span class="st">"write"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"math"</span> <span class="ot">=</span> <span class="st">"math"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"science"</span> <span class="ot">=</span> <span class="st">"science"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>              ), </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="st">"read"</span> <span class="co"># default of the choice in app</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="output-add-r-object-to-ui" class="level2">
+<h2 class="anchored" data-anchor-id="output-add-r-object-to-ui">Output: add R object to <code>ui</code></h2>
+<ul>
+<li><p>After analyzing data, we need to return the output (an R object) to the <code>ui</code>’s main panel</p></li>
+<li><p>The R objects could be the following:</p>
+<ul>
+<li><p>text: <code>textOutput</code></p></li>
+<li><p>table: <code>tableOutput</code></p></li>
+<li><p>plot: <code>plotOutput</code></p></li>
+<li><p>image: <code>imageOutput</code></p></li>
+<li><p>Others: please read more at here <a href="https://shiny.rstudio.com/tutorial/written-tutorial/lesson4/" class="uri">https://shiny.rstudio.com/tutorial/written-tutorial/lesson4/</a></p></li>
+</ul></li>
+<li><p>For example, the below code is to just simply write a text to the output panel:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mainPanel</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">"selected_var"</span>) <span class="co"># selected_var is the name of the output, that we will create later in the server (back end)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="col-sm-8" role="main">
+<div id="selected_var" class="shiny-text-output"></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-final-ui" class="level2">
+<h2 class="anchored" data-anchor-id="the-final-ui">The final <code>ui</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># App title ----</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Shiny First App"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sidebar layout</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LEFT: Sidebar panel for inputs ----</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Input: WRITE YOUR CODE HERE (1)</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">selectInput</span>(<span class="st">"var"</span>, <span class="co"># name of this widget</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">h3</span>(<span class="st">"Select one variable"</span>), <span class="co"># label of this widget</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"read"</span> <span class="ot">=</span> <span class="st">"read"</span>, <span class="co"># "user select this" = value we set for this option, will be used later in the back end</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"write"</span> <span class="ot">=</span> <span class="st">"write"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"math"</span> <span class="ot">=</span> <span class="st">"math"</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"science"</span> <span class="ot">=</span> <span class="st">"science"</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                  ), </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">selected =</span> <span class="st">"read"</span> <span class="co"># default of the choice in app</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  RIGHT: Main panel for displaying outputs ----</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Output: WRITE YOUR CODE HERE (2)</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">"selected_var"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="part-2-server" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-server">Part 2: <code>server</code></h2>
+<ul>
+<li><p>The idea of <code>server</code> is to link between input-analyzing-output</p></li>
+<li><p>For example, it looks like this:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>selected_var <span class="ot">&lt;-</span> <span class="fu">renderText</span>({ </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"You have selected the "</span>, input<span class="sc">$</span>var, <span class="st">" variable"</span>) <span class="co"># var is the name of widget from the input sidebar, that the user picked it</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Depending on the output, we can render in the server by different render functions:</p>
+<ul>
+<li><p>Text: <code>renderText</code></p></li>
+<li><p>Table: <code>renderTable</code></p></li>
+<li><p>Plot: <code>renderPlot</code></p></li>
+<li><p>Others: please read more at here <a href="https://shiny.rstudio.com/tutorial/written-tutorial/lesson4/" class="uri">https://shiny.rstudio.com/tutorial/written-tutorial/lesson4/</a></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="launch-the-app" class="level2">
+<h2 class="anchored" data-anchor-id="launch-the-app">Launch the app</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>myapp <span class="ot">=</span> <span class="fu">shinyApp</span>(ui, server)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">runApp</span>(myapp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="more-analysis-at-the-server" class="level2">
+<h2 class="anchored" data-anchor-id="more-analysis-at-the-server">More analysis at the <code>server</code></h2>
+<ul>
+<li><p>The app worked like a charm, but it is a bit quite stupid :)</p></li>
+<li><p>Now, let’s make more analysis for the variable the user picked, then get the output, and render to the <code>ui</code>’s main panel</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>selected_var <span class="ot">&lt;-</span> <span class="fu">renderText</span>({ </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"You have selected the "</span>, input<span class="sc">$</span>var, <span class="st">" variable. Below is its statistics: "</span>) <span class="co"># var is the name of widget from the input sidebar, that the user picked it</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># MORE CODE FOR ANALYSIS</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>stat_var <span class="ot">=</span> <span class="fu">renderText</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(Hsb <span class="sc">%&gt;%</span> <span class="fu">select</span>(input<span class="sc">$</span>var))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Show the output to the main panel</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># App title ----</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Shiny First App"</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sidebar layout</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LEFT: Sidebar panel for inputs ----</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Input: WRITE YOUR CODE HERE (1)</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">selectInput</span>(<span class="st">"var"</span>, <span class="co"># name of this widget</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">h3</span>(<span class="st">"Select one variable"</span>), <span class="co"># label of this widget</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"read"</span> <span class="ot">=</span> <span class="st">"read"</span>, <span class="co"># "user select this" = value we set for this option, will be used later in the back end</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"write"</span> <span class="ot">=</span> <span class="st">"write"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"math"</span> <span class="ot">=</span> <span class="st">"math"</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"science"</span> <span class="ot">=</span> <span class="st">"science"</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>                  ), </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">selected =</span> <span class="st">"read"</span> <span class="co"># default of the choice in app</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  RIGHT: Main panel for displaying outputs ----</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Output: WRITE YOUR CODE HERE (2)</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">"selected_var"</span>),</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">"stat_var"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Let’s launch the app again:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>myapp <span class="ot">=</span> <span class="fu">shinyApp</span>(ui, server)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">runApp</span>(myapp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>A bit ugly, but worked!</p></li>
+<li><p>Let’s add a histogram of the chosen variable into the main panel: need to revise both <code>ui</code> and <code>server</code> to include it:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># App title ----</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Shiny First App"</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sidebar layout</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LEFT: Sidebar panel for inputs ----</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Input: WRITE YOUR CODE HERE (1)</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">selectInput</span>(<span class="st">"var"</span>, <span class="co"># name of this widget</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">h3</span>(<span class="st">"Select one variable"</span>), <span class="co"># label of this widget</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"read"</span> <span class="ot">=</span> <span class="st">"read"</span>, <span class="co"># "user select this" = value we set for this option, will be used later in the back end</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"write"</span> <span class="ot">=</span> <span class="st">"write"</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"math"</span> <span class="ot">=</span> <span class="st">"math"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"science"</span> <span class="ot">=</span> <span class="st">"science"</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                  ), </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">selected =</span> <span class="st">"read"</span> <span class="co"># default of the choice in app</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  RIGHT: Main panel for displaying outputs ----</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Output: WRITE YOUR CODE HERE (2)</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">"selected_var"</span>),</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">"stat_var"</span>),</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"hist_var"</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>selected_var <span class="ot">&lt;-</span> <span class="fu">renderText</span>({ </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"You have selected the "</span>, input<span class="sc">$</span>var, <span class="st">" variable"</span>) <span class="co"># var is the name of widget from the input sidebar, that the user picked it</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># MORE CODE FOR ANALYSIS</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>stat_var <span class="ot">=</span> <span class="fu">renderText</span>(</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(Hsb <span class="sc">%&gt;%</span> <span class="fu">select</span>(input<span class="sc">$</span>var))</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>hist_var <span class="ot">=</span> <span class="fu">renderPlot</span>(</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(Hsb <span class="sc">%&gt;%</span> <span class="fu">pull</span>(input<span class="sc">$</span>var), <span class="co"># pull to get the vector, rather than dataframe </span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="fu">paste0</span>(<span class="st">"Histogram plot of "</span>, input<span class="sc">$</span>var)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>         ) </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Run the app again:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>myapp <span class="ot">=</span> <span class="fu">shinyApp</span>(ui, server)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">runApp</span>(myapp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="practice-quiz" class="level2">
+<h2 class="anchored" data-anchor-id="practice-quiz">Practice quiz</h2>
+<ul>
+<li><p>Simple one: I want to allow the user to have 5 possible choices for variables: <code>read</code>, <code>write</code>, <code>math</code>, <code>science</code>, and <code>socst</code> . Could you help to revise the app to have 5 possible choices for input.</p></li>
+<li><p>Medium one: I want to allow the user to pick two variables (each can have 4 possible choices: <code>read</code>, <code>write</code>, <code>math</code>, <code>science</code>). Then, plot the scatter plot between two variables.</p></li>
+<li><p>Medium one: Render the head of the table <code>Hsb</code> by showing only the first 6 rows of the table to the main panel</p></li>
+<li><p>Difficult one:</p>
+<ul>
+<li><p>Allow the user to have a slider bar (range from 0 to 100) to choose one threshold value, default value is 50</p></li>
+<li><p>Then, in the server, run a t-test one sample to compare mean of the chosen variable and the threshold</p></li>
+<li><p>Then, get the output and print out to the main panel of the <code>ui</code></p></li>
+</ul></li>
+<li><p>Have fun with both quiz</p></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
