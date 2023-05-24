@@ -23,6 +23,7 @@ CP122: Fundamental Computer Programmingâ€“Statistical and Quantitative Analysisâ
 - 2022/4/20: add more videos
 - 2022/4/20: add slide 8 of PCA and kickoff iteration+function
 - 2023/4/15: add Shiny web app
+- 2023/5/24: use ChatGPT to build Shiny app (in folder `ask_chatgpt`)
 
 # Contact
 
