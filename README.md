@@ -15,6 +15,7 @@ CP122: Fundamental Computer Programmingâ€“Statistical and Quantitative Analysisâ
 1. Regression diagnostics and tidy: [slide](slide/06_test04b_reg_diagnostics_tidy.pdf), [code](06_test04b_reg_diagnostics_tidy.Rmd)
 1. Extension 1: Don't repeat yourself: [slide](slide/07_iteration_function.pdf), [code](07_iteration_function.Rmd)
 1. Extension 2: PCA: [slide](slide/08_pca.pdf), [code](08_pca.Rmd)
+1. Shiny App: [lecture](09_shiny.qmd)
 
 # Change logs
 
