@@ -55,6 +55,26 @@ Qs = Qs %>%
   mutate(private = ifelse(type=="Private", 1, 0))
 ```
 
+```{r}
+analyze_subsize = function(size_type){
+  Qs_subset = Qs %>% filter(size == size_type)
+  mean(Qs_subset$score, na.rm = TRUE)
+  m1 = lm(score ~ I(log(international_students)) + I(log(faculty_count)) + 
+            student_faculty_ratio, data=Qs_subset)
+  output = tidy(m1)
+  
+  return(output)
+}
+
+analyze_subsize(size_type = "M")
+analyze_subsize(size_type = "L")
+analyze_subsize(size_type = "S")
+analyze_subsize(size_type = "XL")
+
+```
+
+
+
 ## How many size groups?
 
 ```{r}
@@ -181,7 +201,7 @@ for (i in 1:4){
 
 ```{r}
 # for L size
-output[[2]]
+output[[4]]
 ```
 
 ## Another way is mapping or apply
